@@ -1,0 +1,9 @@
+[package]
+name = "dgs-core"
+version = "0.1.0"
+edition = "2021"
+description = "Core types and SVG rendering for typst_dgs"
+
+[dependencies]
+serde = { workspace = true }
+dgs-parser = { path = "../dgs-parser" }

@@ -1,0 +1,17 @@
+[package]
+name = "dgs-wasm"
+version = "0.1.0"
+edition = "2021"
+description = "WASM plugin entry point for typst_dgs"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+dgs-core = { path = "../dgs-core" }
+dgs-parser = { path = "../dgs-parser" }
+serde = { workspace = true }
+ciborium = { workspace = true }
+wasm-minimal-protocol = "0.2.0"
+
+
