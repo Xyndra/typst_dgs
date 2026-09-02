@@ -13,12 +13,13 @@ echo "=== Packaging dgs into $PKG_DIR ==="
 
 # Remove previous contents to avoid leftover files
 rm -rf "$PKG_DIR"
-mkdir -p "$PKG_DIR/src" "$PKG_DIR/wasm"
+mkdir -p "$PKG_DIR/src" "$PKG_DIR/wasm" "$PKG_DIR/assets"
 
 # Copy package files
 cp lib.typ typst.toml README.md LICENSE "$PKG_DIR/"
 cp src/*.typ "$PKG_DIR/src/"
 cp wasm/dgs_wasm.wasm "$PKG_DIR/wasm/"
+cp assets/readme.png "$PKG_DIR/assets/"
 
 echo "=== Done! Package contents: ==="
 find "$PKG_DIR" -type f | sort
