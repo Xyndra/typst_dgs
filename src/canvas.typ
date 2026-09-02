@@ -66,7 +66,7 @@
   )
 
   // 5. Call WASM plugin
-  let dgs = plugin("../target/wasm32-unknown-unknown/release/dgs_wasm.wasm")
+  let dgs = plugin("../wasm/dgs_wasm.wasm")
   let svg-bytes = cbor.encode(payload)
   let svg-result = dgs.render_dgs(svg-bytes)
 

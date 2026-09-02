@@ -1,3 +1,3 @@
-#import "dgs/objects.typ": *
-#import "dgs/canvas.typ": dgs-canvas
-#import "dgs/style.typ"
+#import "src/objects.typ": *
+#import "src/canvas.typ": dgs-canvas
+#import "src/style.typ"
