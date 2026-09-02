@@ -3,6 +3,7 @@ use crate::svg::SvgBuilder;
 use crate::viewport::Viewport;
 use std::f64::consts::PI;
 
+#[allow(clippy::too_many_arguments)]
 pub fn render_arc(
     center: (f64, f64),
     radius: f64,

@@ -286,7 +286,7 @@ fn evaluate_parametric(
     };
 
     let default_min = 0.0;
-    let default_max = 6.283185307; // 2*PI
+    let default_max = std::f64::consts::TAU;
     let min = t_min.unwrap_or(default_min);
     let max = t_max.unwrap_or(default_max);
     let steps = 200;

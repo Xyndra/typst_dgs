@@ -86,6 +86,7 @@ impl SvgBuilder {
         ));
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub fn ellipse(
         &mut self,
         cx: f64,

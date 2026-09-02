@@ -33,38 +33,28 @@ impl Parser {
 
     pub fn parse_expr(&mut self) -> Result<Expr, String> {
         let mut left = self.parse_term()?;
-        loop {
-            match self.peek() {
-                Token::Plus | Token::Minus => {
-                    let op = match self.advance() {
-                        Token::Plus => BinOp::Add,
-                        Token::Minus => BinOp::Sub,
-                        _ => unreachable!(),
-                    };
-                    let right = self.parse_term()?;
-                    left = Expr::BinOp(op, Box::new(left), Box::new(right));
-                }
-                _ => break,
-            }
+        while let Token::Plus | Token::Minus = self.peek() {
+            let op = match self.advance() {
+                Token::Plus => BinOp::Add,
+                Token::Minus => BinOp::Sub,
+                _ => unreachable!(),
+            };
+            let right = self.parse_term()?;
+            left = Expr::BinOp(op, Box::new(left), Box::new(right));
         }
         Ok(left)
     }
 
     fn parse_term(&mut self) -> Result<Expr, String> {
         let mut left = self.parse_power()?;
-        loop {
-            match self.peek() {
-                Token::Star | Token::Slash => {
-                    let op = match self.advance() {
-                        Token::Star => BinOp::Mul,
-                        Token::Slash => BinOp::Div,
-                        _ => unreachable!(),
-                    };
-                    let right = self.parse_power()?;
-                    left = Expr::BinOp(op, Box::new(left), Box::new(right));
-                }
-                _ => break,
-            }
+        while let Token::Star | Token::Slash = self.peek() {
+            let op = match self.advance() {
+                Token::Star => BinOp::Mul,
+                Token::Slash => BinOp::Div,
+                _ => unreachable!(),
+            };
+            let right = self.parse_power()?;
+            left = Expr::BinOp(op, Box::new(left), Box::new(right));
         }
         Ok(left)
     }

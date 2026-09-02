@@ -2,6 +2,7 @@ use crate::color::Color;
 use crate::svg::SvgBuilder;
 use crate::viewport::Viewport;
 
+#[allow(clippy::too_many_arguments)]
 pub fn render_ellipse(
     center: (f64, f64),
     rx: f64,
