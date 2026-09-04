@@ -5,6 +5,9 @@ resolver = "2"
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
 ciborium = "0.2.1"
+# Single crates.io dependency — the dgs scene/render engine.
+# default-features is off to keep the WASM plugin lean (no PNG rasterizer).
+dgs = { version = "0.1", default-features = false }
 
 [profile.release]
 lto = true

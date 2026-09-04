@@ -42,24 +42,32 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "460fbee9c2c2f33933d720630a6a0bac33ba7053db5344fac858d4b8952d77d5"
 
 [[package]]
-name = "dgs-core"
+name = "dgs"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "24c2ade25db76b7e8edaec28eb8cf6ec09c0e63398b8f2d006d30d50db21cb44"
 dependencies = [
- "dgs-parser",
+ "dgs-macros",
  "serde",
 ]
 
 [[package]]
-name = "dgs-parser"
+name = "dgs-macros"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f295e1b8a6b234583846f2373fc6bdaf64f0cb4114e109020fb32b22767b399b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
+]
 
 [[package]]
 name = "dgs-wasm"
 version = "0.1.0"
 dependencies = [
  "ciborium",
- "dgs-core",
- "dgs-parser",
+ "dgs",
  "serde",
  "wasm-minimal-protocol",
 ]

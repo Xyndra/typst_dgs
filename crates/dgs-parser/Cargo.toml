@@ -1,7 +1,0 @@
-[package]
-name = "dgs-parser"
-version = "0.1.0"
-edition = "2021"
-description = "Math expression parser for typst_dgs"
-
-[dependencies]

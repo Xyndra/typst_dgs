@@ -8,10 +8,7 @@ description = "WASM plugin entry point for typst_dgs"
 crate-type = ["cdylib"]
 
 [dependencies]
-dgs-core = { path = "../dgs-core" }
-dgs-parser = { path = "../dgs-parser" }
+dgs = { workspace = true }
 serde = { workspace = true }
 ciborium = { workspace = true }
 wasm-minimal-protocol = "0.2.0"
-
-
