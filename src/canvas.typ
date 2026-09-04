@@ -1,6 +1,5 @@
 #import "style.typ": parse-color, color-to-hex
 
-/// The DGS canvas - renders geometric objects into a coordinate system.
 #let dgs-canvas(
   x1: 0, y1: 0, x2: 10, y2: 10,
   width: 300pt, height: 300pt,
@@ -15,7 +14,6 @@
   axis-label-size: auto,
   objects: (),
 ) = {
-  // 1. Build point lookup from all dgs-point objects
   let point-lookup = (:)
   for obj in objects {
     if type(obj) == dictionary and "type" in obj and obj.type == "point" and obj.name != none {
@@ -23,14 +21,12 @@
     }
   }
 
-  // 2. Helper to resolve a point reference
   let resolve-pt = (pt) => {
     if type(pt) == array { return pt }
     if type(pt) == str and pt in point-lookup { return point-lookup.at(pt) }
     return pt
   }
 
-  // 3. Resolve all objects (substitute named point references with coords)
   let resolved = objects.map(obj => {
     if type(obj) != dictionary or "type" not in obj { return obj }
     let o = obj
@@ -45,11 +41,16 @@
       o.insert("center", resolve-pt(o.center))
     } else if o.type == "arc" {
       o.insert("center", resolve-pt(o.center))
+    } else if o.type == "semicircle" {
+      o.insert("from", resolve-pt(o.from))
+      o.insert("to", resolve-pt(o.to))
+      if o.center != auto and o.center != none {
+        o.insert("center", resolve-pt(o.center))
+      }
     }
     o
   })
 
-  // 4. Build the CBOR payload
   let payload = (
     viewport: (x1: x1 * 1.0, y1: y1 * 1.0, x2: x2 * 1.0, y2: y2 * 1.0,
                width: width / 1pt * 1.0, height: height / 1pt * 1.0),
@@ -65,11 +66,9 @@
     objects: resolved,
   )
 
-  // 5. Call WASM plugin
   let dgs = plugin("../wasm/dgs_wasm.wasm")
   let svg-bytes = cbor.encode(payload)
   let svg-result = dgs.render_dgs(svg-bytes)
 
-  // 6. Return SVG as content
   image(svg-result, format: "svg")
 }

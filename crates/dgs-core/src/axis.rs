@@ -35,7 +35,14 @@ pub fn render_axes(
                 continue;
             }
             let (px, _) = viewport.to_svg(x as f64, 0.0);
-            svg.line(px, axis_y - tick_len, px, axis_y + tick_len, axis_color, axis_width);
+            svg.line(
+                px,
+                axis_y - tick_len,
+                px,
+                axis_y + tick_len,
+                axis_color,
+                axis_width,
+            );
             svg.text(
                 px,
                 axis_y + tick_len + label_size,
@@ -47,7 +54,14 @@ pub fn render_axes(
         }
         // "x" label at right end
         let (lx, _) = viewport.to_svg(viewport.x2, 0.0);
-        svg.text(lx - label_size, axis_y - tick_len - 2.0, "x", label_color, label_size, "end");
+        svg.text(
+            lx - label_size,
+            axis_y - tick_len - 2.0,
+            "x",
+            label_color,
+            label_size,
+            "end",
+        );
     }
 
     // Tick marks and labels on y-axis
@@ -61,7 +75,14 @@ pub fn render_axes(
                 continue;
             }
             let (_, py) = viewport.to_svg(0.0, y as f64);
-            svg.line(axis_x - tick_len, py, axis_x + tick_len, py, axis_color, axis_width);
+            svg.line(
+                axis_x - tick_len,
+                py,
+                axis_x + tick_len,
+                py,
+                axis_color,
+                axis_width,
+            );
             svg.text(
                 axis_x - tick_len - 4.0,
                 py,
@@ -73,7 +94,14 @@ pub fn render_axes(
         }
         // "y" label at top
         let (_, ly) = viewport.to_svg(0.0, viewport.y2);
-        svg.text(axis_x + tick_len + 4.0, ly + label_size, "y", label_color, label_size, "start");
+        svg.text(
+            axis_x + tick_len + 4.0,
+            ly + label_size,
+            "y",
+            label_color,
+            label_size,
+            "start",
+        );
     }
 }
 

@@ -69,6 +69,16 @@ pub enum GeoObject {
         color: Option<Color>,
         stroke: Option<f64>,
     },
+    #[serde(rename = "semicircle")]
+    Semicircle {
+        from: PointRef,
+        to: PointRef,
+        center: Option<PointRef>,
+        dir: String,
+        color: Option<Color>,
+        stroke: Option<f64>,
+        fill: Option<Color>,
+    },
     #[serde(rename = "curve")]
     Curve {
         expr_str: String,
@@ -110,14 +120,22 @@ pub fn build_point_lookup(objects: &[GeoObject]) -> HashMap<String, (f64, f64)> 
     lookup
 }
 
-pub fn resolve_objects(objects: &[GeoObject], lookup: &HashMap<String, (f64, f64)>) -> Vec<GeoObject> {
+pub fn resolve_objects(
+    objects: &[GeoObject],
+    lookup: &HashMap<String, (f64, f64)>,
+) -> Vec<GeoObject> {
     let mut resolved = Vec::with_capacity(objects.len());
     for obj in objects {
         match obj {
             GeoObject::Point { .. } => {
                 resolved.push(obj.clone());
             }
-            GeoObject::Line { from, to, color, stroke } => {
+            GeoObject::Line {
+                from,
+                to,
+                color,
+                stroke,
+            } => {
                 resolved.push(GeoObject::Line {
                     from: resolve_point_ref(from, lookup),
                     to: resolve_point_ref(to, lookup),
@@ -147,7 +165,10 @@ pub fn resolve_objects(objects: &[GeoObject], lookup: &HashMap<String, (f64, f64
                 fill,
             } => {
                 resolved.push(GeoObject::Polygon {
-                    points: points.iter().map(|p| resolve_point_ref(p, lookup)).collect(),
+                    points: points
+                        .iter()
+                        .map(|p| resolve_point_ref(p, lookup))
+                        .collect(),
                     color: *color,
                     stroke: *stroke,
                     fill: *fill,
@@ -187,6 +208,25 @@ pub fn resolve_objects(objects: &[GeoObject], lookup: &HashMap<String, (f64, f64
                     end_angle: *end_angle,
                     color: *color,
                     stroke: *stroke,
+                });
+            }
+            GeoObject::Semicircle {
+                from,
+                to,
+                center,
+                dir,
+                color,
+                stroke,
+                fill,
+            } => {
+                resolved.push(GeoObject::Semicircle {
+                    from: resolve_point_ref(from, lookup),
+                    to: resolve_point_ref(to, lookup),
+                    center: center.as_ref().map(|c| resolve_point_ref(c, lookup)),
+                    dir: dir.clone(),
+                    color: *color,
+                    stroke: *stroke,
+                    fill: *fill,
                 });
             }
             GeoObject::Curve {

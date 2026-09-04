@@ -17,7 +17,15 @@ pub fn render_ellipse(
     let (cx, cy) = viewport.to_svg(center.0, center.1);
     let sx = viewport.scale_x();
     let sy = viewport.scale_y();
-    svg.ellipse(cx, cy, rx * sx, ry * sy, rotation, fill, Some((color, stroke)));
+    svg.ellipse(
+        cx,
+        cy,
+        rx * sx,
+        ry * sy,
+        rotation,
+        fill,
+        Some((color, stroke)),
+    );
 }
 
 #[cfg(test)]

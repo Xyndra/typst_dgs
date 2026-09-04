@@ -9,6 +9,7 @@ pub mod line;
 pub mod objects;
 pub mod point;
 pub mod polygon;
+pub mod semicircle;
 pub mod svg;
 pub mod theme;
 pub mod viewport;
@@ -132,10 +133,8 @@ pub fn render(req: CanvasRequest) -> String {
                 stroke,
                 fill,
             } => {
-                let resolved_points: Vec<(f64, f64)> = points
-                    .iter()
-                    .filter_map(|p| p.resolve(&lookup))
-                    .collect();
+                let resolved_points: Vec<(f64, f64)> =
+                    points.iter().filter_map(|p| p.resolve(&lookup)).collect();
                 if !resolved_points.is_empty() {
                     polygon::render_polygon(
                         &resolved_points,
@@ -186,6 +185,30 @@ pub fn render(req: CanvasRequest) -> String {
                         *end_angle,
                         color.unwrap_or(default_color),
                         stroke.unwrap_or(1.5),
+                        &req.viewport,
+                        &mut svg,
+                    );
+                }
+            }
+            objects::GeoObject::Semicircle {
+                from,
+                to,
+                center,
+                dir,
+                color,
+                stroke,
+                fill,
+            } => {
+                if let (Some(f), Some(t)) = (from.resolve(&lookup), to.resolve(&lookup)) {
+                    let c = center.as_ref().and_then(|c| c.resolve(&lookup));
+                    semicircle::render_semicircle(
+                        f,
+                        t,
+                        c,
+                        dir,
+                        color.unwrap_or(default_color),
+                        stroke.unwrap_or(1.5),
+                        *fill,
                         &req.viewport,
                         &mut svg,
                     );

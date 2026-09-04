@@ -197,10 +197,7 @@ mod tests {
 
     #[test]
     fn test_hex_8() {
-        assert_eq!(
-            parse_color("#ff000080"),
-            Some(Color::new(255, 0, 0, 128))
-        );
+        assert_eq!(parse_color("#ff000080"), Some(Color::new(255, 0, 0, 128)));
     }
 
     #[test]

@@ -40,15 +40,7 @@ impl SvgBuilder {
         ));
     }
 
-    pub fn line(
-        &mut self,
-        x1: f64,
-        y1: f64,
-        x2: f64,
-        y2: f64,
-        stroke: Color,
-        width: f64,
-    ) {
+    pub fn line(&mut self, x1: f64, y1: f64, x2: f64, y2: f64, stroke: Color, width: f64) {
         self.elements.push(format!(
             "<line x1=\"{}\" y1=\"{}\" x2=\"{}\" y2=\"{}\" stroke=\"{}\" stroke-width=\"{}\" />",
             fmt(x1),
@@ -106,7 +98,12 @@ impl SvgBuilder {
             None => String::new(),
         };
         let transform = if rotation != 0.0 {
-            format!(" transform=\"rotate({} {} {})\"", fmt(rotation), fmt(cx), fmt(cy))
+            format!(
+                " transform=\"rotate({} {} {})\"",
+                fmt(rotation),
+                fmt(cx),
+                fmt(cy)
+            )
         } else {
             String::new()
         };
@@ -178,15 +175,7 @@ impl SvgBuilder {
         ));
     }
 
-    pub fn text(
-        &mut self,
-        x: f64,
-        y: f64,
-        text: &str,
-        color: Color,
-        size: f64,
-        anchor: &str,
-    ) {
+    pub fn text(&mut self, x: f64, y: f64, text: &str, color: Color, size: f64, anchor: &str) {
         self.elements.push(format!(
             "<text x=\"{}\" y=\"{}\" fill=\"{}\" font-size=\"{}\" font-family=\"sans-serif\" text-anchor=\"{}\" dominant-baseline=\"middle\">{}</text>",
             fmt(x),
