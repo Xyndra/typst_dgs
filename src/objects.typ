@@ -108,25 +108,29 @@
   }
 }
 
-#let dgs-eq(expr, var: "x", color: auto, stroke: auto) = {
+#let dgs-eq(expr, var: "x", color: auto, stroke: auto, samples: auto, tolerance: auto, precision: auto) = {
   (
     type: "curve",
     expr_str: expr,
     t_min: none,
     t_max: none,
     var_name: var,
+    samples: if precision != auto { precision } else if samples != auto { samples } else { none },
+    tolerance: if tolerance != auto { tolerance * 1.0 } else { none },
     color: color-to-hex(color),
     stroke: if stroke != auto { stroke / 1pt } else { none },
   )
 }
 
-#let dgs-eq-param(x-expr, y-expr, t1: 0, t2: 6.283185, color: auto, stroke: auto) = {
+#let dgs-eq-param(x-expr, y-expr, t1: 0, t2: 6.283185, color: auto, stroke: auto, samples: auto, tolerance: auto, precision: auto) = {
   (
     type: "curve_param",
     x_expr: x-expr,
     y_expr: y-expr,
     t_min: t1 * 1.0,
     t_max: t2 * 1.0,
+    samples: if precision != auto { precision } else if samples != auto { samples } else { none },
+    tolerance: if tolerance != auto { tolerance * 1.0 } else { none },
     color: color-to-hex(color),
     stroke: if stroke != auto { stroke / 1pt } else { none },
   )
