@@ -15,6 +15,9 @@ cargo test
 echo "=== Compiling example ==="
 typst compile --root . examples/demo.typ examples/demo.pdf
 
+echo "=== Compiling README example"
+typst compile --root . examples/readme.typ assets/readme.png
+
 echo "=== Done! ==="
 echo "  WASM: wasm/dgs_wasm.wasm"
 echo "  PDF:  examples/demo.pdf"
