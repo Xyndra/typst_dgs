@@ -14,7 +14,7 @@ A GeoGebra-like dynamic geometry plugin for Typst, powered by a WASM rendering e
 ## Usage
 
 ```typst
-#import "@preview/dgs:0.0.1": *
+#import "@preview/dgs:0.0.2": *
 
 #dgs-canvas(
   x1: -5, y1: -5, x2: 5, y2: 5,
